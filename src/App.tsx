@@ -9,7 +9,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' Component={Page} />
-        <Route path='Hasil' Component={Hasil} />
+        <Route path='/hasil' Component={Hasil} />
       </Routes>
     </>
   )
