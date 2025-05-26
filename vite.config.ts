@@ -8,4 +8,14 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          recharts: ['recharts'],
+          axios: ['axios'],
+        }
+      }
+    }
+  }
 })
