@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 type VoteCount = {
   name: string;
@@ -37,8 +30,10 @@ const VotingPieChart: React.FC = () => {
           if (count[vote] !== undefined) count[vote]++;
         });
 
+        const totalVotes = Object.values(count).reduce((a, b) => a + b, 0);
+
         const formatted: VoteCount[] = Object.entries(count)
-          .map(([name, value]) => ({ name, value }))
+          .map(([name, value]) => ({ name, value, total: totalVotes }))
           .filter((item) => item.value > 0);
 
         setData(formatted);
@@ -84,7 +79,7 @@ const VotingPieChart: React.FC = () => {
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />
-              <Legend />
+              <Legend content={<CustomLegend />} />
             </PieChart>
           </ResponsiveContainer>
         )}
@@ -97,11 +92,19 @@ const VotingPieChart: React.FC = () => {
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
-    const { name, value } = payload[0].payload;
+    const { name, value, total } = payload[0].payload;
+    const percentage = ((value / total) * 100).toFixed(1); // contoh: 42.5%
+
     return (
       <div className="bg-white dark:bg-gray-700 p-2 rounded shadow-md border border-gray-300 dark:border-gray-600">
+        <p className="text-sm font-bold text-gray-800 dark:text-gray-200">
+          {name.replace('Paslon nomor', 'Paslon')}
+        </p>
         <p className="text-sm text-gray-800 dark:text-gray-200">
-          {name.replace('Paslon nomor', 'Paslon')} memperoleh {value} suara
+          memperoleh {percentage}% suara
+        </p>
+        <p className="text-sm text-gray-800 dark:text-gray-200">
+          memperoleh {value} suara
         </p>
       </div>
     );
@@ -109,5 +112,23 @@ const CustomTooltip = ({ active, payload }: any) => {
 
   return null;
 };
+
+const CustomLegend = (props: any) => {
+  const { payload } = props;
+
+  return (
+    <ul className="flex gap-4 justify-center mt-4 flex-wrap">
+      {payload.map((entry: any, index: number) => (
+        <li key={`item-${index}`} className="flex items-center space-x-2">
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }}/>
+          <span className="text-sm text-gray-800 dark:text-gray-200">
+            {entry.value.replace('Paslon nomor', 'Paslon')}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 
 export default VotingPieChart;
