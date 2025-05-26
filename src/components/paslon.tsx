@@ -1,19 +1,21 @@
-
+import paslon1 from '../../public/paslon 1.webp'
+import paslon2 from '../../public/paslon 2.webp'
+import paslon3 from '../../public/paslon 3.webp'
 const paslon = () => {
   return (
     <div className="py-24 px-20 ">
         <div className="flex flex-wrap justify-center gap-6 gap-y-6">
             <div className="border-2 border-solid border-indigo-600 rounded-xl p-4">
                 <p className="text-xl text-center font-semibold">Paslon 1</p>
-                <img src="../public/paslon 1.png" alt="" className="w-96 mt-4"/>
+                <img src={paslon1} alt="" className="w-96 mt-4"/>
             </div>
             <div className="border-2 border-solid border-indigo-600 rounded-xl p-4">
                 <p className="text-xl text-center font-semibold">Paslon 2</p>
-                <img src="../public/paslon 2.png" alt="" className="w-96 mt-4"/>
+                <img src={paslon2} alt="" className="w-96 mt-4"/>
             </div>
             <div className="border-2 border-solid border-indigo-600 rounded-xl p-4">
                 <p className="text-xl text-center font-semibold">Paslon 3</p>
-                <img src="../public/paslon 3.png" alt="" className="w-96 mt-4"/>
+                <img src={paslon3} alt="" className="w-96 mt-4"/>
             </div>
         </div>
         <div className="mt-20 flex justify-center">
